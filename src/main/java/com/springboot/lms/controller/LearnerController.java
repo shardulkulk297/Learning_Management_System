@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -39,9 +40,10 @@ public class LearnerController {
         return ResponseEntity.status(HttpStatus.OK).body("Learner Deleted Successfully");
     }
 
-    @GetMapping("/api/learner/getById/{id}")
-    public ResponseEntity<?> getLearnerById(@PathVariable int id){
-        return ResponseEntity.status(HttpStatus.OK).body(learnerService.getLearnerById(id));
+    @GetMapping("/api/learner/getLearner")
+    public ResponseEntity<?> getLearnerByUsername(Principal principal){
+        String username = principal.getName();
+        return ResponseEntity.status(HttpStatus.OK).body(learnerService.getLearnerByUsername(username));
     }
 
     @PutMapping("/api/learner/updateById/{id}")

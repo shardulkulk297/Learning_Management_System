@@ -9,6 +9,8 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @OneToOne
+    private User user;
     @Column(name = "title")
     private String title;
     private float credits;
