@@ -63,7 +63,7 @@ public class LearnerCourseService {
 
         List<Course> courses = learnerCourseRepository.getCoursesOfGivenLearner(learnerId);
 
-        if(courses!=null)
+        if(courses!=null && courses.size() != 0)
         {
             return courses;
         }
