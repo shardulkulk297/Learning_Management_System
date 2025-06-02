@@ -39,4 +39,10 @@ public class UserController {
         }
     }
 
+    @GetMapping("/api/user/details")
+    public Object getUserDetails(Principal principal){
+        String username = principal.getName();
+        return userService.getLoggedInUser(username);
+    }
+
 }
