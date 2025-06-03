@@ -14,8 +14,17 @@ public class Video {
     private String videoTitle;
     private float playTime;
     private String videoCode;
+    private int sequence;
     @ManyToOne
     private LModule module;
+
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
 
     public int getId() {
         return id;

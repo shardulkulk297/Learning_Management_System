@@ -1,5 +1,7 @@
 package com.springboot.lms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,7 +49,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/signup").permitAll()
                         .requestMatchers("/api/learner/add").permitAll()
                         .requestMatchers("/api/author/add").permitAll()
+                        .requestMatchers("/api/module/add").hasAuthority("AUTHOR")
                         .requestMatchers("/api/learner/getLearner").hasAuthority("LEARNER")
+                        .requestMatchers("/api/video/add/{moduleId}").hasAuthority("AUTHOR")
                         .requestMatchers("/api/course/add").hasAnyAuthority("AUTHOR", "EXECUTIVE")
                         .anyRequest().authenticated()
                 )
@@ -66,6 +70,8 @@ public class SecurityConfig {
             throws Exception {
         return auth.getAuthenticationManager();
     }
+
+
 
 }
 

@@ -24,7 +24,7 @@ public class AuthorService {
         user.setRole("AUTHOR");
         user = userService.signUp(user);
         author.setUser(user);
-        author.setActive(false);
+        author.setActive(true);
         return authorRepository.save(author);
     }
 }

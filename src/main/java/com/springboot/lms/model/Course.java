@@ -9,11 +9,20 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
-    private User user;
     @Column(name = "title")
     private String title;
     private float credits;
+    @ManyToOne
+    private Author author;
+
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
     public float getCredits() {
         return credits;
