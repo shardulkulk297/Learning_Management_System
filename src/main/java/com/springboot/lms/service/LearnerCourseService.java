@@ -1,5 +1,6 @@
 package com.springboot.lms.service;
 
+import com.springboot.lms.dto.LearnerDto;
 import com.springboot.lms.exception.ResourceNotFoundException;
 import com.springboot.lms.model.Course;
 import com.springboot.lms.model.Learner;
@@ -18,12 +19,16 @@ public class LearnerCourseService {
     private LearnerRepository learnerRepository;
     private CourseRepository courseRepository;
     private LearnerCourseRepository learnerCourseRepository;
+    private LearnerDto learnerDto;
+
+
 
     public LearnerCourseService(LearnerRepository learnerRepository, CourseRepository courseRepository,
-     LearnerCourseRepository learnerCourseRepository){
+                                LearnerCourseRepository learnerCourseRepository, LearnerDto learnerDto){
         this.learnerRepository = learnerRepository;
         this.courseRepository = courseRepository;
         this.learnerCourseRepository = learnerCourseRepository;
+        this.learnerDto = learnerDto;
     }
 
     public LearnerCourse enrollLearnerInCourse(int learnerId, int courseId, LearnerCourse learnerCourse)
@@ -47,9 +52,17 @@ public class LearnerCourseService {
         return learnerCourseRepository.save(learnerCourse);
     }
 
-    public List<Learner> getLearnerEnrolledInGivenCourse(int courseId){
+    public List<LearnerDto> getLearnerEnrolledInGivenCourse(int courseId){
         courseRepository.findById(courseId).orElseThrow(()->new ResourceNotFoundException("Course not found"));
-        return learnerCourseRepository.getLearnerEnrolledInCourse(courseId);
+//        return learnerCourseRepository.getLearnerEnrolledInCourse(courseId);
+        /*
+        This returns all the data of Course with user password and everything which is something we don't need
+        To simplify this we have created a dto class in which only necessary details will be shown as a response
+         */
+
+        List<Learner> learners = learnerCourseRepository.getLearnerEnrolledInCourse(courseId);
+        return learnerDto.convertToDto(learners);
+
     }
 
     public List<Course> getCoursesOfGivenLearner(int learnerId){

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/course")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class CourseController {
 
     @Autowired
@@ -41,6 +42,13 @@ public class CourseController {
             logger.info("No Pagination call for all courses");
         return courseService.getAllCourses(page, size);
     }
+
+    @GetMapping("/getCoursesByAuthor")
+    public List<Course> getCoursesByAuthor(Principal principal){
+        return courseService.getCoursesByAuthor(principal.getName());
+    }
+
+
 
 
 }

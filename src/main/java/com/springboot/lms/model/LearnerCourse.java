@@ -3,6 +3,7 @@ package com.springboot.lms.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "learner_course")
@@ -57,5 +58,17 @@ public class LearnerCourse {
 
     public void setLearner(Learner learner) {
         this.learner = learner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        LearnerCourse that = (LearnerCourse) o;
+        return id == that.id && Objects.equals(couponCode, that.couponCode) && Objects.equals(enrollDate, that.enrollDate) && Objects.equals(course, that.course) && Objects.equals(learner, that.learner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, couponCode, enrollDate, course, learner);
     }
 }

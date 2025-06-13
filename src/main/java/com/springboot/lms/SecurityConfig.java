@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -46,9 +47,14 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/user/signup").permitAll()
                         .requestMatchers("/api/learner/add").permitAll()
                         .requestMatchers("/api/author/add").permitAll()
+                        .requestMatchers("/api/course/getAll").permitAll()
+                        .requestMatchers("/api/user/token").authenticated()
+                        .requestMatchers("/api/user/details").authenticated()
+                        .requestMatchers("/api/course/getCoursesByAuthor").hasAuthority("AUTHOR")
                         .requestMatchers("/api/module/add").hasAuthority("AUTHOR")
                         .requestMatchers("/api/learner/getLearner").hasAuthority("LEARNER")
                         .requestMatchers("/api/video/add/{moduleId}").hasAuthority("AUTHOR")

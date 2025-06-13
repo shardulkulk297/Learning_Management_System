@@ -25,8 +25,8 @@ public class LearnerCourseController {
     }
 
     @GetMapping("/api/learner/course/getLearner/{courseId}")
-    public  List<Learner> getLearnerEnrolledInCourse(@PathVariable int courseId){
-        return learnerCourseService.getLearnerEnrolledInGivenCourse(courseId);
+    public ResponseEntity<?> getLearnerEnrolledInCourse(@PathVariable int courseId){
+        return ResponseEntity.status(HttpStatus.FOUND).body(learnerCourseService.getLearnerEnrolledInGivenCourse(courseId));
     }
 
     @GetMapping("/api/learner/course/getCourses/{learnerId}")
